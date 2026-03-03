@@ -11,95 +11,814 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add New Room - Ocean View Resort</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f8;
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
         }
-        header {
-            background-color: #2c3e50;
-            color: white;
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
             padding: 20px;
-            text-align: center;
-            font-size: 24px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-        .container {
-            max-width: 500px;
-            margin: 50px auto;
-            padding: 30px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        h2 {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #34495e;
-        }
-        form {
             display: flex;
-            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
-        label {
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #34495e;
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            z-index: 1000;
         }
-        input[type="text"], input[type="number"] {
-            padding: 10px;
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-brand i {
+            font-size: 2rem;
+            color: white;
+        }
+
+        .nav-brand span {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .nav-user {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 50px;
+        }
+
+        .nav-user i {
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .nav-user span {
+            color: white;
+            font-weight: 500;
+        }
+
+        /* Main Container */
+        .container {
+            width: 550px;
+            margin-top: 80px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            color: white;
+            text-align: center;
+        }
+
+        .header h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .header h2 i {
+            font-size: 2.2rem;
+        }
+
+        .header p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* Form Body */
+        .form-body {
+            padding: 40px;
+        }
+
+        /* Message Styles */
+        .message {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .message i {
+            font-size: 1.3rem;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 5px solid #28a745;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 5px solid #dc3545;
+        }
+
+        /* Validation Summary */
+        .validation-summary {
+            background: #fff3cd;
+            color: #856404;
+            padding: 15px 20px;
+            border-radius: 10px;
             margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 14px;
+            border-left: 5px solid #ffc107;
+            display: none;
         }
+
+        .validation-summary.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .validation-summary h4 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .validation-summary ul {
+            list-style: none;
+            padding-left: 25px;
+        }
+
+        .validation-summary li {
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .validation-summary li i {
+            font-size: 0.8rem;
+            color: #856404;
+        }
+
+        /* Form Groups */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .form-group label i {
+            color: #667eea;
+            margin-right: 10px;
+            width: 20px;
+        }
+
+        .form-group label .required {
+            color: #e74c3c;
+            margin-left: 4px;
+        }
+
+        /* Input Wrapper */
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 15px;
+            color: #95a5a6;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+            pointer-events: none;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 14px 15px 14px 45px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            outline: none;
+            background: white;
+        }
+
+        .input-wrapper input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102,126,234,0.1);
+        }
+
+        .input-wrapper input:focus ~ i {
+            color: #667eea;
+        }
+
+        /* Validation Feedback */
+        .validation-feedback {
+            display: block;
+            margin-top: 8px;
+            font-size: 0.85rem;
+            min-height: 20px;
+        }
+
+        .validation-feedback i {
+            margin-right: 5px;
+            font-size: 0.85rem;
+        }
+
+        .valid-feedback {
+            color: #28a745;
+        }
+
+        .invalid-feedback {
+            color: #dc3545;
+        }
+
+        /* Input Validation States */
+        .input-wrapper.valid input {
+            border-color: #28a745;
+        }
+
+        .input-wrapper.invalid input {
+            border-color: #dc3545;
+        }
+
+        /* Price Preview */
+        .price-preview {
+            background: linear-gradient(135deg, #667eea10 0%, #764ba210 100%);
+            border: 2px dashed #667eea40;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .price-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .price-info {
+            flex: 1;
+        }
+
+        .price-info h4 {
+            color: #2c3e50;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .price-display {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #667eea;
+            line-height: 1;
+        }
+
+        .price-display small {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: #7f8c8d;
+            margin-left: 5px;
+        }
+
+        /* Button */
         .btn {
-            padding: 12px;
-            background-color: #3498db;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            border-radius: 5px;
-            font-weight: bold;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(102,126,234,0.3);
+            margin-top: 10px;
         }
+
         .btn:hover {
-            background-color: #1c5980;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102,126,234,0.4);
         }
-        .back-link {
-            display: block;
-            margin-top: 15px;
+
+        .btn i {
+            font-size: 1.2rem;
+        }
+
+        .btn.loading {
+            position: relative;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .btn.loading i {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Footer Links */
+        .footer-links {
+            margin-top: 25px;
             text-align: center;
-            color: #2980b9;
-            text-decoration: none;
-            font-weight: bold;
         }
-        .back-link:hover {
-            text-decoration: underline;
+
+        .footer-links a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 50px;
+            transition: all 0.3s;
+            background: #f8f9fa;
+        }
+
+        .footer-links a:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(-5px);
+        }
+
+        .footer-links a i {
+            font-size: 0.9rem;
+        }
+
+        /* Quick Tips */
+        .quick-tips {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-top: 25px;
+        }
+
+        .quick-tips h5 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+        }
+
+        .quick-tips h5 i {
+            color: #667eea;
+        }
+
+        .quick-tips ul {
+            list-style: none;
+        }
+
+        .quick-tips li {
+            color: #7f8c8d;
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quick-tips li i {
+            color: #27ae60;
+            font-size: 0.75rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+            
+            .nav-brand span {
+                font-size: 1.2rem;
+            }
+            
+            .container {
+                width: 95%;
+                margin-top: 70px;
+            }
+            
+            .form-body {
+                padding: 25px;
+            }
+            
+            .price-display {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <header>Ocean View Resort - Add New Room</header>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <i class="fas fa-hotel"></i>
+            <span>Ocean View Resort</span>
+        </div>
+        <div class="nav-user">
+            <i class="fas fa-user-circle"></i>
+            <span><%= user.getUsername() %></span>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
     <div class="container">
-        <h2>Add New Room Type</h2>
+        <!-- Header -->
+        <div class="header">
+            <h2>
+                <i class="fas fa-plus-circle"></i>
+                Add New Room
+            </h2>
+            <p>
+                <i class="fas fa-info-circle"></i>
+                Create a new room type with pricing
+            </p>
+        </div>
 
-        <form action="RoomServlet" method="post">
-            <input type="hidden" name="action" value="add">
+        <!-- Form Body -->
+        <div class="form-body">
+            <!-- Success / Error Messages from Server -->
+            <% if(request.getAttribute("success") != null) { %>
+                <div class="message success">
+                    <i class="fas fa-check-circle"></i>
+                    <%= request.getAttribute("success") %>
+                </div>
+            <% } %>
 
-            <label for="room_type">Room Type</label>
-            <input type="text" name="room_type" id="room_type" placeholder="Enter room type" required>
+            <% if(request.getAttribute("error") != null) { %>
+                <div class="message error">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <%= request.getAttribute("error") %>
+                </div>
+            <% } %>
 
-            <label for="price_per_night">Price Per Night (Rs.)</label>
-            <input type="number" name="price_per_night" id="price_per_night" placeholder="Enter price" step="0.01" min="0" required>
+            <!-- Validation Summary (shown on submit if validation fails) -->
+            <div class="validation-summary" id="validationSummary">
+                <h4>
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Please fix the following errors:
+                </h4>
+                <ul id="errorList"></ul>
+            </div>
 
-            <button type="submit" class="btn">Add Room</button>
-        </form>
+            <!-- Add Room Form -->
+            <form action="RoomServlet" method="post" id="addRoomForm" novalidate>
+                <input type="hidden" name="action" value="add">
 
-        <a href="RoomServlet?action=list" class="back-link">← Back to Room List</a>
+                <!-- Room Type -->
+                <div class="form-group">
+                    <label>
+                        <i class="fas fa-tag"></i>
+                        Room Type <span class="required">*</span>
+                    </label>
+                    <div class="input-wrapper" id="roomTypeWrapper">
+                        <i class="fas fa-bed"></i>
+                        <input type="text" name="room_type" id="roomType" 
+                               placeholder="e.g., DELUXE, SUITE, STANDARD" 
+                               value="<%= request.getParameter("room_type") != null ? request.getParameter("room_type") : "" %>"
+                               required>
+                    </div>
+                    <div class="validation-feedback" id="roomTypeFeedback"></div>
+                </div>
+
+                <!-- Price Per Night -->
+                <div class="form-group">
+                    <label>
+                        <i class="fas fa-dollar-sign"></i>
+                        Price Per Night (LKR) <span class="required">*</span>
+                    </label>
+                    <div class="input-wrapper" id="priceWrapper">
+                        <i class="fas fa-tag"></i>
+                        <input type="number" name="price_per_night" id="pricePerNight" 
+                               placeholder="Enter price in LKR" 
+                               step="0.01" min="0" 
+                               value="<%= request.getParameter("price_per_night") != null ? request.getParameter("price_per_night") : "" %>"
+                               required>
+                    </div>
+                    <div class="validation-feedback" id="priceFeedback"></div>
+                </div>
+
+                <!-- Price Preview -->
+                <div class="price-preview" id="pricePreview">
+                    <div class="price-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <div class="price-info">
+                        <h4>Price Preview</h4>
+                        <div class="price-display" id="priceDisplay">
+                            LKR 0.00
+                            <small>per night</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Tips -->
+                <div class="quick-tips">
+                    <h5>
+                        <i class="fas fa-lightbulb"></i>
+                        Quick Tips
+                    </h5>
+                    <ul>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            Use uppercase for room type (e.g., DELUXE, SUITE)
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            Price should be a positive number
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            You can use decimals for precise pricing
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn" id="submitBtn">
+                    <i class="fas fa-save"></i>
+                    Add Room Type
+                </button>
+            </form>
+
+            <!-- Footer Links -->
+            <div class="footer-links">
+                <a href="RoomServlet?action=list">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Room List
+                </a>
+            </div>
+        </div>
     </div>
+
+    <script>
+        // Get form elements
+        const form = document.getElementById('addRoomForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const validationSummary = document.getElementById('validationSummary');
+        const errorList = document.getElementById('errorList');
+        
+        // Input elements
+        const roomType = document.getElementById('roomType');
+        const pricePerNight = document.getElementById('pricePerNight');
+        
+        // Wrapper elements
+        const roomTypeWrapper = document.getElementById('roomTypeWrapper');
+        const priceWrapper = document.getElementById('priceWrapper');
+        
+        // Feedback elements
+        const roomTypeFeedback = document.getElementById('roomTypeFeedback');
+        const priceFeedback = document.getElementById('priceFeedback');
+        
+        // Price display
+        const priceDisplay = document.getElementById('priceDisplay');
+
+        // Real-time validation and price preview
+        roomType.addEventListener('input', validateRoomType);
+        pricePerNight.addEventListener('input', function() {
+            validatePrice();
+            updatePricePreview();
+        });
+
+        // Room Type Validation
+        function validateRoomType() {
+            const type = roomType.value.trim();
+            
+            if (type.length === 0) {
+                setInvalid(roomTypeWrapper, roomTypeFeedback, 'Room type is required');
+            } else if (type.length < 3) {
+                setInvalid(roomTypeWrapper, roomTypeFeedback, 'Room type must be at least 3 characters');
+            } else if (!/^[A-Za-z\s_]+$/.test(type)) {
+                setInvalid(roomTypeWrapper, roomTypeFeedback, 'Room type can only contain letters, spaces, and underscores');
+            } else {
+                // Auto-format to uppercase
+                roomType.value = type.toUpperCase();
+                setValid(roomTypeWrapper, roomTypeFeedback, '✓ Valid room type');
+            }
+        }
+
+        // Price Validation
+        function validatePrice() {
+            const price = parseFloat(pricePerNight.value);
+            
+            if (!pricePerNight.value) {
+                setInvalid(priceWrapper, priceFeedback, 'Price is required');
+            } else if (isNaN(price) || price <= 0) {
+                setInvalid(priceWrapper, priceFeedback, 'Price must be greater than 0');
+            } else if (price > 1000000) {
+                setInvalid(priceWrapper, priceFeedback, 'Price seems too high (max 1,000,000)');
+            } else {
+                setValid(priceWrapper, priceFeedback, '✓ Valid price');
+            }
+        }
+
+        // Update Price Preview
+        function updatePricePreview() {
+            const price = parseFloat(pricePerNight.value);
+            if (price && price > 0) {
+                priceDisplay.innerHTML = `LKR ${price.toLocaleString('en-LK', {minimumFractionDigits: 2, maximumFractionDigits: 2})} <small>per night</small>`;
+            } else {
+                priceDisplay.innerHTML = 'LKR 0.00 <small>per night</small>';
+            }
+        }
+
+        // Helper functions for validation styling
+        function setInvalid(wrapper, feedback, message) {
+            wrapper.classList.remove('valid');
+            wrapper.classList.add('invalid');
+            feedback.innerHTML = '<i class="fas fa-exclamation-circle"></i> ' + message;
+            feedback.classList.remove('valid-feedback');
+            feedback.classList.add('invalid-feedback');
+        }
+
+        function setValid(wrapper, feedback, message) {
+            wrapper.classList.remove('invalid');
+            wrapper.classList.add('valid');
+            feedback.innerHTML = '<i class="fas fa-check-circle"></i> ' + message;
+            feedback.classList.remove('invalid-feedback');
+            feedback.classList.add('valid-feedback');
+        }
+
+        // Form submit handler
+        form.addEventListener('submit', function(e) {
+            // Run all validations
+            validateRoomType();
+            validatePrice();
+            
+            // Collect all errors
+            const errors = [];
+            
+            // Room Type validation
+            const type = roomType.value.trim();
+            if (!type) {
+                errors.push('Room type is required');
+            } else if (type.length < 3) {
+                errors.push('Room type must be at least 3 characters');
+            } else if (!/^[A-Za-z\s_]+$/.test(type)) {
+                errors.push('Room type can only contain letters, spaces, and underscores');
+            }
+            
+            // Price validation
+            const price = parseFloat(pricePerNight.value);
+            if (!pricePerNight.value) {
+                errors.push('Price is required');
+            } else if (isNaN(price) || price <= 0) {
+                errors.push('Price must be greater than 0');
+            } else if (price > 1000000) {
+                errors.push('Price seems too high (max 1,000,000)');
+            }
+            
+            // If there are errors, show summary and prevent submission
+            if (errors.length > 0) {
+                e.preventDefault();
+                
+                // Display error summary
+                errorList.innerHTML = '';
+                errors.forEach(error => {
+                    const li = document.createElement('li');
+                    li.innerHTML = '<i class="fas fa-times-circle"></i> ' + error;
+                    errorList.appendChild(li);
+                });
+                
+                validationSummary.classList.add('show');
+                
+                // Scroll to validation summary
+                validationSummary.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                
+                return;
+            }
+            
+            // No errors - format room type to uppercase and submit
+            roomType.value = roomType.value.trim().toUpperCase();
+            
+            // Add loading state
+            submitBtn.classList.add('loading');
+            submitBtn.innerHTML = '<i class="fas fa-spinner"></i> Adding Room...';
+        });
+
+        // Hide validation summary when user starts typing
+        const inputs = [roomType, pricePerNight];
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+                validationSummary.classList.remove('show');
+            });
+        });
+
+        // Prevent negative values in price field
+        pricePerNight.addEventListener('keydown', function(e) {
+            if (e.key === '-' || e.key === 'e') {
+                e.preventDefault();
+            }
+        });
+
+        // Auto-format room type to uppercase on blur
+        roomType.addEventListener('blur', function() {
+            this.value = this.value.trim().toUpperCase();
+        });
+
+        // Run initial validations if there are pre-filled values
+        window.addEventListener('load', function() {
+            if (roomType.value) validateRoomType();
+            if (pricePerNight.value) {
+                validatePrice();
+                updatePricePreview();
+            }
+        });
+    </script>
 </body>
 </html>

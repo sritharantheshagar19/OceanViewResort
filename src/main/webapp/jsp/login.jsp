@@ -380,11 +380,7 @@
                     </button>
                 </form>
 
-                <div class="demo-credentials">
-                    <p><i class="fas fa-info-circle" style="color: #667eea;"></i> Demo Credentials:</p>
-                    <p><span>Username:</span> admin | <span>Password:</span> admin123</p>
-                    <p><span>Username:</span> staff | <span>Password:</span> staff123</p>
-                </div>
+                
             </div>
         </div>
     </div>
