@@ -586,7 +586,7 @@
 
     <!-- Logout Button -->
     <div class="logout-wrapper">
-        <a class="logout-btn" href="<%=request.getContextPath()%>/LogoutServlet">
+        <a class="logout-btn" href="<%=request.getContextPath()%>/jsp/logout.jsp">
             <i class="fas fa-sign-out-alt"></i>
             Logout
         </a>
