@@ -534,14 +534,15 @@
             </a>
         </div>
 
+        <!-- Help Card (replaced Billing) -->
         <div class="card">
             <div class="card-icon">
-                <i class="fas fa-file-invoice"></i>
+                <i class="fas fa-question-circle"></i>
             </div>
-            <h3>Billing</h3>
-            <p>Generate bills, process payments, and view payment history</p>
-            <a href="<%=request.getContextPath()%>/BillServlet">
-                Calculate <i class="fas fa-arrow-right"></i>
+            <h3>Help Guide</h3>
+            <p>Get assistance with using the system, FAQs, and contact support for help</p>
+            <a href="<%=request.getContextPath()%>/jsp/help.jsp">
+                Get Help <i class="fas fa-arrow-right"></i>
             </a>
         </div>
     </div>
@@ -585,7 +586,7 @@
 
     <!-- Logout Button -->
     <div class="logout-wrapper">
-        <a class="logout-btn" href="<%=request.getContextPath()%>/jsp/logout.jsp">
+        <a class="logout-btn" href="<%=request.getContextPath()%>/LogoutServlet">
             <i class="fas fa-sign-out-alt"></i>
             Logout
         </a>
